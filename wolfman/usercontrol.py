@@ -1,27 +1,51 @@
+# -*- coding: utf-8 -*- 
 from gamerole import *
 
 class usercontrol:
     def __init__(self, gamerole):
         self.gamerole = gamerole
 
+        self.guard = 0
         self.lastguard = 0
         self.guardeduser = 0
         
+        self.witch = 0
         self.ispoisoned = False
         self.poisoneduser = 0
         self.issaved = False
         self.saveduser = 0
 
+        self.wolves = []
         self.killed = 0
 
         self.couple1 = 0
         self.couple2 = 0
+
+        self.numhuman = 0
+        self.hunter = 0
+        self.cupid = 0
+        self.hybird = 0
+        self.predict = 0
+        self.president = 0
+        self.idiot = 0
+        self.girl = 0
         
         self.userlist = [['玩家'+ str(i), '存活', "角色未定义"] \
                          for i in range(gamerole.numtotal + 1)]        
 
     def setuser(self, u1, role):
-        self.userlist[u1][2] = role
+        if u1 == 0:
+            return True
+        elif self.userlist[u1][2] != "角色未定义":
+            return False
+        else:
+            self.userlist[u1][2] = role
+            if role == "狼人":
+                self.wolves.append(u1)
+            elif role == "女巫":
+                self.witch = u1
+
+            return True
 
     def setcouple(self, u1, u2):
         if not u1 == 0 and not u2 == 0:
@@ -32,10 +56,21 @@ class usercontrol:
             return True
         return False
 
-    def printuserstate(self):
+    def printuserinfo(self):
         print("\n")
         for i in range(1, self.gamerole.numtotal + 1):
             print(self.userlist[i])
+        print("\n")
+            
+    def printuserstate(self):
+        print("\n")
+        for i in range(1, self.gamerole.numtotal + 1):
+            if self.userlist[i][1] == "存活":
+                print(self.userlist[i])
+        for i in range(1, self.gamerole.numtotal + 1):
+            if self.userlist[i][1] != "存活":
+                print(self.userlist[i])
+        print("\n")
 
     def coupledeathcheck(self, u1):
         if u1 == self.couple1:
@@ -54,7 +89,7 @@ class usercontrol:
         self.userlist[u1][1] = reason
 
     def dayoff(self):
-        if self.guarduser == self.killed:
+        if self.guardeduser == self.killed:
             self.killed = 0
 
         if self.saveduser == self.killed:
@@ -79,7 +114,7 @@ class usercontrol:
             result.append(couple)
             self.death(couple, "情侣带死")
 
-        self.guarduser = 0
+        self.guardeduser = 0
         if self.ispoisoned == True:
             self.poisoneduser = 0
         if self.issaved == True:
@@ -94,24 +129,20 @@ class usercontrol:
         self.killed = u1
 
     def guard(self, u1):
-        if u1 == 0:
+        if u1 == self.lastguard or u1 == 0:
             return False
-        if u1 == self.lastguard:
-            return False
-        self.lastguard = self.guarduser = u1
+        self.lastguard = self.guardeduser = u1
         return True
 
     def witchsave(self):
-        if self.issaved:
-            return
-        if self.killed == 0:
+        if self.issaved or self.killed == 0:
             return
 
         self.issaved = True
         self.saveduser = self.killed
 
     def witchpoison(self, u1):
-        if self.ispoisoned:
+        if self.ispoisoned or u1 == 0:
             return
 
         self.ispoisoned = True

@@ -10,93 +10,81 @@
 18人    5狼人 1先知 1女巫 1爱神 1守护 1猎人 1村长 1白痴 1混血 5个民
 '''
 
+totalrole = 13
+(God, Thief, Wolves, Humen, Witch, Cupid, Predict, Guard, Hybird, Hunter, President, Idiot, Girl) = range(totalrole)
+
+
 from getinput import *
 
 class gamerole:
-    isextend = False
-
-    hasthief = False
-    hascupid = False
-    haswitch = False
-    hasguard = False
-    hashunter = False
-    hashybird = False
-    haspredict = False
-    haspresident = False
-    hasidiot = False
-    hasgirl = False
-
-    numwolf = 0
-    numhuman = 0
     numtotal = 0
+    rolelist = []
 
     def isneedthief(self):
-        self.hasthief = getbool("是否启用盗贼")
+        if getbool("是否启用盗贼"):
+            self.rolelist[Thief] = 1
+
+    def __init__(self):
+        self.rolelist = [0 for i in range(totalrole)]
 
     def setbydefault(self, playernum):
         self.numtotal = playernum
         assert playernum < 20 and playernum > 5
-        self.haswitch = True
-        self.numwolf = 2
-        self.numhuman = playernum - 3
+        self.rolelist[Witch] = 1
+        self.rolelist[Wolves] = 2
+        self.rolelist[Humen] = playernum - 3
         if playernum > 7:
-            self.hascupid = True
-            self.numhuman = playernum - 4
+            self.rolelist[Cupid] = 1
+            self.rolelist[Humen] = playernum - 4
         if playernum > 9:
-            self.numwolf = 3
-            self.haspredict = True
-            self.numhuman = playernum - 6
+            self.rolelist[Wolves] = 3
+            self.rolelist[Predict] = 1
+            self.rolelist[Humen] = playernum - 6
         if playernum > 11:
-            self.hasguard = True
-            self.hashybird = True
-            self.numhuman = playernum - 8
+            self.rolelist[Guard] = 1
+            self.rolelist[Hybird] = 1
+            self.rolelist[Humen] = playernum - 8
         if playernum > 13:
-            self.numwolf = 4
-            self.hashunter = True
-            self.numhuman = playernum - 10
+            self.rolelist[Wolves] = 4
+            self.rolelist[Hunter] = 1
+            self.rolelist[Humen] = playernum - 10
         if playernum > 15:
-            self.haspresident = True
-            self.numhuman = playernum - 11
+            self.rolelist[President] = 1
+            self.rolelist[Humen] = playernum - 11
         if playernum > 16:
-            self.numwolf = 5
-            self.numhuman = playernum - 12
+            self.rolelist[Wolves] = 5
+            self.rolelist[Humen] = playernum - 12
         if playernum > 17:
-            self.hasidiot = True
-            self.numhuman = playernum - 13
+            self.rolelist[Idiot] = 1
+            self.rolelist[Humen] = playernum - 13
 
-        if self.hasthief == True:
-            self.numwolf += 1
-            self.numhuman += 1
+        if self.rolelist[Thief] == 1:
+            self.numhuman += 2
         self.printall()
 
     def printall(self):
-        if self.isextend:
-            print("启用扩展包")
-        else:
-            print("不启用扩展包")
-
-        if self.hasthief:
+        if self.rolelist[Thief]:
             print("启用盗贼")
         else:
             print("不启用盗贼")
-        if self.hascupid:
+        if self.rolelist[Cupid]:
             print("启用丘比特")
-        if self.haswitch:
+        if self.rolelist[Witch]:
             print("启用女巫")
-        if self.hasguard:
+        if self.rolelist[Guard]:
             print("启用守卫")
-        if self.hashunter:
+        if self.rolelist[Hunter]:
             print("启用猎人")
-        if self.hashybird:
+        if self.rolelist[Hybird]:
             print("启用混血儿")
-        if self.haspredict:
+        if self.rolelist[Predict]:
             print("启用预言家")
-        if self.haspresident:
+        if self.rolelist[President]:
             print("启用村长")
-        if self.hasidiot:
+        if self.rolelist[Idiot]:
             print("启用白痴")
-        if self.hasgirl:
+        if self.rolelist[Girl]:
             print("启用小女孩")
 
-        print (str(self.numwolf) + "个狼人")
-        print (str(self.numhuman) + "个村民")
+        print (str(self.rolelist[Wolves]) + "个狼人")
+        print (str(self.rolelist[Humen]) + "个村民")
