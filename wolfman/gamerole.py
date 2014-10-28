@@ -28,12 +28,14 @@ class gamerole:
 
     numwolf = 0
     numhuman = 0
+    numtotal = 0
 
     def isneedthief(self):
         self.hasthief = getbool("是否启用盗贼")
 
     def setbydefault(self, playernum):
-        assert playernum < 18 and playernum > 5
+        self.numtotal = playernum
+        assert playernum < 20 and playernum > 5
         self.haswitch = True
         self.numwolf = 2
         self.numhuman = playernum - 3
