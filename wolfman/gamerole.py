@@ -11,11 +11,12 @@
 '''
 
 totalrole = 13
-(God, Thief, Wolves, Humen, Witch, Cupid, Predict, Guard, Hybird, Hunter, President, Idiot, Girl) = range(totalrole)
-
+(Reserved, Thief, Wolves, Humen, Witch, Cupid, Predict, \
+ Guard, Hybird, Hunter, President, Idiot, Girl) = range(totalrole)
+rolename = ["保留", "盗贼", "狼人", "普通村名", "女巫", "丘比特", "预言家", \
+            "守卫", "混血儿", "猎人", "村长", "白痴", "小女孩"] 
 
 from getinput import *
-
 class gamerole:
     numtotal = 0
     rolelist = []

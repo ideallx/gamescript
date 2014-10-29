@@ -1,34 +1,23 @@
 # -*- coding: utf-8 -*- 
 from gamerole import *
 
+(userid, livestate, role) = range(3)
+
 class usercontrol:
     def __init__(self, gamerole):
         self.gamerole = gamerole
 
-        self.guard = 0
+        self.alivelist = []
+        
         self.lastguard = 0
         self.guardeduser = 0
         
-        self.witch = 0
         self.ispoisoned = False
         self.poisoneduser = 0
         self.issaved = False
         self.saveduser = 0
 
-        self.wolves = []
         self.killed = 0
-
-        self.couple1 = 0
-        self.couple2 = 0
-
-        self.numhuman = 0
-        self.hunter = 0
-        self.cupid = 0
-        self.hybird = 0
-        self.predict = 0
-        self.president = 0
-        self.idiot = 0
-        self.girl = 0
         
         self.userlist = [['玩家'+ str(i), '存活', "角色未定义"] \
                          for i in range(gamerole.numtotal + 1)]        
@@ -36,10 +25,10 @@ class usercontrol:
     def setuser(self, u1, role):
         if u1 == 0:
             return True
-        elif self.userlist[u1][2] != "角色未定义":
+        elif self.userlist[u1][role] != "角色未定义":
             return False
         else:
-            self.userlist[u1][2] = role
+            self.userlist[u1][role] = role
             if role == "狼人":
                 self.wolves.append(u1)
             elif role == "女巫":
@@ -48,9 +37,7 @@ class usercontrol:
             return True
 
     def setcouple(self, u1, u2):
-        if not u1 == 0 and not u2 == 0:
-            self.userlist[u1].append("情侣")
-            self.userlist[u2].append("情侣")
+        if not u1 == 0 and not u2 == 0 and u1 != u2:
             self.couple1 = u1
             self.couple2 = u2
             return True
