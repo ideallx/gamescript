@@ -7,6 +7,12 @@ from usercontrol import *
 
 def askformat(prompt):
     return "\n>>>" + prompt
+
+def openeye(role):
+    print(askformat(rolename[role] + "请睁眼"))
+
+def closeeye(role):
+    print(askformat(rolename[role] + "请睁眼"))
     
 class wolfman:
     def __init__(self):
@@ -46,7 +52,7 @@ class wolfman:
 
     def getplayernum(self):
         i = getnum("输入玩家数量")
-        if i > 19 or i < 5:
+        if i > 18 or i < 6:
             print("人数不对")
             self.getplayernum()
             return
@@ -54,16 +60,15 @@ class wolfman:
 
     def setuser(self, role):
         while True:
-            i = self.getusernum("请输入" + role + "号码，输入0表示没有" + role)
-            if self.uc.setuser(i,  role) == True:
+            i = self.getusernum("请输入" + rolename[role] + "号码，输入0表示没有" + rolename[role])
+            if self.uc.setuser(i,  role):
                 return
             else:
-                print("该用户已有角色" + self.uc.userlist[i][2])
+                print("该用户已有角色" + self.uc.userlist[i][Role])
     
     def setusers(self, num, role):     
-        for j in range(self.__gamerole.numwolf):
+        for j in range(num):
             self.setuser(role)
-        self.uc.wolfkill(self.getusernum("狼人选择杀几号？，输入0表示没有杀人"))
 
     def setbattlefield(self):
         self.__gamerole.isneedthief()
@@ -78,14 +83,15 @@ class wolfman:
 
     def firstnight(self):
         print(askformat("天黑请闭眼"))
+
         if self.hasRole(Thief):
-            print(askformat("盗贼请睁眼"))
+            openeye(Thief)
             print("记住盗贼身份，请在之后输入")
-            print(askformat("盗贼请闭眼"))
+            closeeye(Thief)
 
         if self.hasRole(Cupid):
-            print(askformat("丘比特请睁眼"))
-            self.setuser("丘比特")
+            openeye(Cupid)
+            self.setuser(Cupid)
                 
             u1 = self.getusernum("请选择情侣第1人，输入0表示没有情侣")
             u2 = self.getusernum("请选择情侣第2人，输入0表示没有情侣")
@@ -93,26 +99,27 @@ class wolfman:
                 print(str(u1) + "号和" + str(u2) + "为情侣")
             else:
                 print("本局没有情侣")
-            print(askformat("丘比特请闭眼"))
+            closeeye(Cupid)
             
             print(askformat("情侣请睁眼互认"))
             print(askformat("情侣请闭眼"))
                     
         if self.hasRole(Guard):
             print(askformat("守卫请睁眼"))
-            self.setuser("守卫")
+            self.setuser(Guard)
             while (True):
                 if self.uc.guard(self.getusernum(askformat("守卫请选择一个人守护"))) == True:
                     break
             print(askformat("守卫请闭眼"))
 
         print(askformat("狼人们请睁眼"))   
-        self.setusers(self.__gamerole.numwolf, "狼人")
+        self.setusers(self.hasRole(Wolves), Wolves)
+        self.uc.wolfkill(self.getusernum("狼人选择杀几号？，输入0表示没有杀人"))
         print(askformat("狼人们请闭眼"))
 
         if self.hasRole(Predict):
             print(askformat("预言家请睁眼"))
-            self.setuser("预言家")
+            self.setuser(Predict)
 
             i = self.getusernum(askformat("预言家想要验谁"))
             if self.uc.iswolf(i):
@@ -123,7 +130,7 @@ class wolfman:
 
         if self.hasRole(Witch):
             print(askformat("女巫请睁眼"))
-            self.setuser("女巫")
+            self.setuser(Witch)
                 
             b = getbool(askformat("今天晚上" + str(self.uc.killed) + "号被杀死了，你是否要救"))
             if b:
@@ -135,7 +142,7 @@ class wolfman:
 
         if self.self.hasRole(Hunter):
             print(askformat("猎人请睁眼，认识一下"))
-            self.setuser("猎人")
+            self.setuser(Hunter)
             print(askformat("猎人请闭眼"))
 
         self.uc.setremindasnormal()

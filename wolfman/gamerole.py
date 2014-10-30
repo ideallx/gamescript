@@ -60,7 +60,7 @@ class gamerole:
             self.rolelist[Humen] = playernum - 13
 
         if self.rolelist[Thief] == 1:
-            self.numhuman += 2
+            self.rolelist[Humen] += 2
         self.printall()
 
     def printall(self):
