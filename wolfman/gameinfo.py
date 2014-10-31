@@ -9,13 +9,16 @@ totalrole = 13
 (Userid, Livestate, Role, Camp) = range(4)
 
 #live state
-(Undead, Vote, Wolfkill, Poisoned, Love, Gun) in range(6)
+(Undead, Vote, Wolfkill, Poisoned, Love, Gun) = range(6)
 
 #camp
 (Undecided, Wolves, Gods, Humen, Wolfman) = range(5)
 
+#skilllist
+
 rolelist = []
 userlist = []
+skilllist = []
 
 def gameinit(totaluser):
     rolelist = [0 for i in range(totalrole)]

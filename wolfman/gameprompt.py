@@ -90,7 +90,7 @@ def piswolf(uid, iswolf):
 
 
 
-def aforchief()
+def aforchief():
     return input(SForChief)
     
 def ahasthief():
@@ -120,7 +120,7 @@ def auservoted():
 
 
 def gmorning(deathlist):
-    if len(deathlist) == 0
+    if len(deathlist) == 0:
         printGodSay(SSafenight)
     else:
         printGodSay(str(deathlist) + SDeathNight)
