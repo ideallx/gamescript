@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*- 
-from gamerole import *
+# -*- coding: utf-8 -*-
 
-(Userid, Livestate, Role, Camp) = range(4)
+from gamerole import *
 
 class usercontrol:
     def __init__(self, gamerole):
@@ -19,7 +18,7 @@ class usercontrol:
 
         self.killed = 0
         
-        self.userlist = [['玩家'+ str(i), '存活', "角色未定义", "阵营未定义"] \
+        self.userlist = [['玩家'+ str(i), Reserved, "阵营未定义"] \
                          for i in range(gamerole.numtotal + 1)]        
 
     def setuser(self, u1, role):
