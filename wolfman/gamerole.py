@@ -12,6 +12,22 @@
 
 from gameinfo import *
 
+
+def checkUserNum(i):
+    return i in range(6, 19)
+
+def checkSetRole(i):
+    if not checkUserNum(i):
+        return False
+    return guserlist[i] == 0
+
+def checkAlive(i)
+    if not checkUserNum(i):
+        return False
+    if guserlist[i] == 0:
+        return False
+    return guserlist[i].live == LUndead
+
 class gamerole:
     numtotal = 0
 
@@ -20,6 +36,16 @@ class gamerole:
             rolelist[Thief] = 1
         else:
             rolelist[Thief] = 0
+
+    def playernumcheck(playernum):
+        actual = 0
+        for i in range(1, totalrole):
+            actual += rolelist[i]
+
+        if rolelist[thief]:
+            return actual == playernum + 2
+        else:
+            return actual == playernum
 
     def setbydefault(self, playernum):
         self.numtotal = playernum
@@ -55,6 +81,17 @@ class gamerole:
         if rolelist[Thief] == 1:
             rolelist[Humen] += 2
 
-    def setbyuser(self, playerlist):
-        rolelist = playerlist
+    def setbyuser(self):
+        rolelist[Thief] = 0
+        rolelist[Wolves] = 0
+        rolelist[Humen] = 0
+        rolelist[Witch] = 0
+        rolelist[Cupid] = 0
+        rolelist[Predict] = 0
+        rolelist[Hybird] = 0
+        rolelist[Hunter] = 0
+        rolelist[President] = 0
+        rolelist[Idiot] = 0
+        rolelist[Girl] = 0
+        
         return

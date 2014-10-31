@@ -1,27 +1,28 @@
+# -*- coding: utf-8 -*- 
 
-totalrole = 13
+from role import *
+#g for global
+
+gtotalrole = 13
+gturnnum = 0
+gtotaluser = 0
 
 #role id
-(Reserved, Thief, Wolves, Humen, Witch, Cupid, Predict, \
- Guard, Hybird, Hunter, President, Idiot, Girl) = range(totalrole)
-
-#userlist info
-(Userid, Livestate, Role, Camp) = range(4)
-
-#live state
-(Undead, Vote, Wolfkill, Poisoned, Love, Gun) = range(6)
+(RReserved, RThief, RWolves, RHumen, RWitch, RCupid, RPredict, \
+ RGuard, RHybird, RHunter, RPresident, RIdiot, RGirl) = range(gtotalrole)
 
 #camp
-(Undecided, Wolves, Gods, Humen, Wolfman) = range(5)
+(CUndecided, CWolves, CGods, CHumen, CWolfman) = range(5)
 
-#skilllist
+#role number of each role
+grolelist = []
 
-rolelist = []
-userlist = []
-skilllist = []
+#role of each user
+gtotaluser = []
 
 def gameinit(totaluser):
-    rolelist = [0 for i in range(totalrole)]
-    userlist = [[str(i), Reserved, Undecided]
-                for i in range(totaluser + 1)]
-    
+    gtotaluser = totaluser
+    grolelist = [0 for i in range(totalrole)]
+    guserlist = [0 for i in range(totaluser)]
+
+

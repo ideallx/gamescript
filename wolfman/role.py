@@ -1,38 +1,76 @@
+# -*- coding: utf-8 -*- 
 from gameinfo import *
 from gameprompt import *
 
-class AbsRole:
-    users = []
-    death = Undead
-    role = Reserved
-    ramp = Undecided
+def setuserroleinput(roleid, userseq = 0):
+    return asetuserrole(roleid, checkSetRole, userseq)
+
+def setuser(uid, roleid):
+    if roleid == RWolves:
+        guserlist[uid] = RoleWolf(uid)
+    elif roleid == RWitch:
+        guserlist[uid] = RoleWitch(uid)
+    elif roleid == RHumen:
+        guserlist[uid] = RoleHumen(uid)
+
+class RoleHuman:
+    uid = 0
+    live = LUndead
+    role = RReserved
+    camp = CUndecided
     
-    def __init__(self, userlist):
-        for i in range(len(userlist)):
-            self.users.append(userlist[i])
+    def __init__(self, uid):
+        self.uid  = uid
+        self.live = LUndead
+        
+        self.role = RHumen
+        self.camp = CUndecided
 
     #first night act
-    def fnact(self):
+    def fnact():
         return;
 
     #normal night act
     def nact(self):
         return
 
-    def death(self, reason, turn):
+    def killed(self, reason):
+        self.live = reason
         return
 
-    def print(self):
+    def display(self):
         return
 
-class RoleWolves(AbsRole):
-    role = Wolves
-    
-    def fnact(self):
-        setusers(self.hasRole(Wolves), Wolves)
+class RoleGods(RoleHuman):
+    def __init(self, uid):
+        self.camp = CGods
+
+    def fnact():
+        setuser(setuserroleinput(self.role, i), self.role)
+
+
+
+class RoleWolf(RoleHuman):
+    def __init__(self, uid):
+        self.role = RWolves
+        self.camp = CWolves
+
+    def fnact():
+        for i = range(grolelist[self.role]):
+            setuser(setuserroleinput(self.role, i), self.role)
 
     def nact(self):
-        wolfkill(achooseuser())
+        wolfkill(achooseuser(checkAlive))
 
-    def print(self):
+    def display(self):
         print(self.users)
+
+
+class RoleWitch(RoleGods):
+    drugsave = 1
+    drugpoison = 1
+    def __init__(self, uid):
+        self.role = RWitch
+
+    def nact(self):
+

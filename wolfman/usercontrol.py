@@ -1,62 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from gamerole import *
+from role import *
 
 class usercontrol:
-    def __init__(self, gamerole):
-        self.gamerole = gamerole
+    killed = 0
+    couple1 = 0
+    couple2 = 0
 
-        self.alivelist = []
-        
-        self.lastguard = 0
-        self.guardeduser = 0
-        
-        self.ispoisoned = False
-        self.poisoneduser = 0
-        self.issaved = False
-        self.saveduser = 0
-
+    def __init__(self):
         self.killed = 0
-        
-        self.userlist = [['玩家'+ str(i), Reserved, "阵营未定义"] \
-                         for i in range(gamerole.numtotal + 1)]        
-
-    def setuser(self, u1, role):
-        if u1 == 0:
-            return True
-        elif self.userlist[u1][Role] != "角色未定义":
-            return False
-        else:
-            self.userlist[u1][Role] = role
-            if role == "狼人":
-                self.userlist[u1][Camp] = "狼人"
-            elif role == "女巫":
-                self.userlist[u1][Camp] = "神"
-
-            return True
-
-    def setcouple(self, u1, u2):
-        if not u1 == 0 and not u2 == 0 and u1 != u2:
-            self.couple1 = u1
-            self.couple2 = u2
-            return True
-        return False
-
-    def printuserinfo(self):
-        print("\n")
-        for i in range(1, self.gamerole.numtotal + 1):
-            print(self.userlist[i])
-        print("\n")
-            
-    def printuserstate(self):
-        print("\n")
-        for i in range(1, self.gamerole.numtotal + 1):
-            if self.userlist[i][1] == "存活":
-                print(self.userlist[i])
-        for i in range(1, self.gamerole.numtotal + 1):
-            if self.userlist[i][1] != "存活":
-                print(self.userlist[i])
-        print("\n")
+        self.couple1 = 0
+        self.couple2 = 0
 
     def coupledeathcheck(self, u1):
         if u1 == self.couple1:
@@ -68,11 +23,8 @@ class usercontrol:
 
     def setremindasnormal(self):
         for i in range(1, self.gamerole.numtotal + 1):
-            if self.userlist[i][2] == "角色未定义":
-                self.userlist[i][2] = "平民"
-
-    def death(self, u1, reason):
-        self.userlist[u1][1] = reason
+            if guserlist[i] == 0:
+                setuser(i, RHumen)
 
     def dayoff(self):
         if self.guardeduser == self.killed:

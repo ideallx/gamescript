@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 from getinput import *
 from gameinfo import *
 
@@ -20,8 +21,8 @@ SAllOpenEye = "天亮了"
 SDispatch = "分发身份卡"
 SSetPlayerNum = "设置玩家人数"
 SNumError = "玩家人数建议 6-18 人"
-SPleaseInput = "请输入"
-SZeroIsNull = "号码, 输入 0 表示没有该角色"
+SUserRoleInput = "请输入%s号码, 输入 0 表示没有该角色"
+SCoupleInput = "请输入情侣%d号码"
 SHadRole = "该用户已有角色"
 SThiefRole = "记住盗贼身份，请在之后输入"
 SABisCouple = "%d 号和 %d 号是情侣"
@@ -88,7 +89,13 @@ def piswolf(uid, iswolf):
     else:
         printNormal(SIsWolf %(uid, SNo))
 
-
+def faskNum(prompt, check):
+    i = 0
+    while True:
+        i = getnum(prompt)
+        if check(i):
+            break
+    return i
 
 def aforchief():
     return input(SForChief)
@@ -96,26 +103,30 @@ def aforchief():
 def ahasthief():
     return getbool(SHasThief)
 
-def asetuserrole(roleid):
-    return getnum(SPleaseInput + rolename[roleid] + SZeroIsNull)
-
-def aplayernum():
-    return getnum(SSetPlayerNum)
-
-def asetcouple(coupleid):
-    return getnum(SPleaseInput + SCouple + str(coupleid) + SZeroIsNull)
-
-def achooseuser():
-    return getnum(SChooseOneUser)
-
 def ausesave(u1):
-    return getbool(SWitchSave, u1)
+    return getbool(SWitchSave % u1)
 
-def ausepoison():
-    return getnum(SWitchPoison)
 
-def auservoted():
-    return getnum(SVoteDeath)
+def asetuserrole(roleid, check, userseq = 0):
+    if userseq == 0:
+        return faskNum(SUserRoleInput % rolename[roleid])
+    else:
+        return faskNum(SUserRoleInput % (rolename[roleid] + str(userseq))
+
+def aplayernum(check):
+    return faskNum(SSetPlayerNum, check)
+
+def asetcouple(coupleid, check):
+    return faskNum(SCoupleInput % coupleid, check)
+
+def achooseuser(check):
+    return faskNum(SChooseOneUser, check)
+
+def ausepoison(check):
+    return faskNum(SWitchPoison, check)
+
+def auservoted(check):
+    return faskNum(SVoteDeath, check)
 
 
 
