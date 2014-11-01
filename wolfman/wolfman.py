@@ -13,7 +13,7 @@ class wolfman:
         gameinit(aplayernum(checkUserNum))
 
         self.gr.isneedthief(ahasthief())
-        self.gr.setbydefault(gtotaluser)
+        self.gr.setbydefault()
 
     def firstnight(self):
         gallcloseeye()

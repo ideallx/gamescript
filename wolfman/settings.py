@@ -8,47 +8,36 @@
 16人    4狼人 1先知 1女巫 1爱神 1守护 1猎人 1村长 1混血 5个民
 17人    5狼人 1先知 1女巫 1爱神 1守护 1猎人 1村长 1混血 5个民
 18人    5狼人 1先知 1女巫 1爱神 1守护 1猎人 1村长 1白痴 1混血 5个民
+10人以上给盗贼
 '''
 
-from gameinfo import *
+from rule import Roles
 
+(SetByDefault, SetByUser, SetByPrompt) = range(3)
 
-def checkUserNum(i):
-    return i in range(6, 19)
+rolelist = [0 for i in range(Roles.TotalRoles)]
 
-def checkSetRole(i):
-    if not checkUserNum(i):
-        return False
-    return guserlist[i] == 0
-
-def checkAlive(i)
-    if not checkUserNum(i):
-        return False
-    if guserlist[i] == 0:
-        return False
-    return guserlist[i].live == LUndead
-
-class gamerole:
-    numtotal = 0
-
-    def isneedthief(self, need):
-        if need:
-            rolelist[Thief] = 1
-        else:
-            rolelist[Thief] = 0
-
+class Settings:
     def playernumcheck(playernum):
         actual = 0
-        for i in range(1, totalrole):
+        for i in range(1, TotalRoles):
             actual += rolelist[i]
 
-        if rolelist[thief]:
+        if rolelist[Thief]:
             return actual == playernum + 2
         else:
             return actual == playernum
 
-    def setbydefault(self, playernum):
-        self.numtotal = playernum
+    def playerRoles(setType, playerlist = []):
+        if selType == SetByDefault:
+            byDefault()
+        elif selType == SetByUser:
+            byUser()
+        else:
+            byPrompt(playerlist)
+
+    def byDefault():
+        self.numtotal = gtotaluser
         assert playernum < 19 and playernum > 5
         rolelist[Witch] = 1
         rolelist[Wolves] = 2
@@ -57,6 +46,7 @@ class gamerole:
             rolelist[Cupid] = 1
             rolelist[Humen] = playernum - 4
         if playernum > 9:
+            rolelist[Thief] = 1
             rolelist[Wolves] = 3
             rolelist[Predict] = 1
             rolelist[Humen] = playernum - 6
@@ -81,7 +71,7 @@ class gamerole:
         if rolelist[Thief] == 1:
             rolelist[Humen] += 2
 
-    def setbyuser(self):
+    def byUser():
         rolelist[Thief] = 0
         rolelist[Wolves] = 0
         rolelist[Humen] = 0
@@ -94,4 +84,6 @@ class gamerole:
         rolelist[Idiot] = 0
         rolelist[Girl] = 0
         
-        return
+    def byPrompt(playerlist):
+        rolelist = playerlist
+

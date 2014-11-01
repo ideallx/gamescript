@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 
-class get:
+class Get:
     def num(prompt, shouldin):
         s = ""
         while True:
