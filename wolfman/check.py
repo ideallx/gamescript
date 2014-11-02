@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*- 
 
-from usercontrol import *
+from rule import *
+from settings import *
 
 class check:
     def userNum(i):
-        return i in range(6, 19)
+        return i in range(Rules.MinUsers, Rules.MaxUsers + 1)
 
     def setRole(i):
         if not checkUserNum(i):

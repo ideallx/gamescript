@@ -11,11 +11,11 @@
 10人以上给盗贼
 '''
 
-from rule import Roles
+from rule import Rules
 
 (SetByDefault, SetByUser, SetByPrompt) = range(3)
 
-rolelist = [0 for i in range(Roles.TotalRoles)]
+rolelist = [0 for i in range(Rules.TotalRoles)]
 
 class Settings:
     def playernumcheck(playernum):

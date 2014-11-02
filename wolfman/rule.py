@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 
-class Roles:
+class Rules:
     TotalRoles = 13
     (Reserved, Thief, Wolves, Humen, Witch, Cupid, Predict, \
     Guard, Hybird, Hunter, President, Idiot, Girl) = range(TotalRoles)

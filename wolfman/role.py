@@ -14,7 +14,7 @@ def setuser(uid, roleid):
         guserlist[uid] = RoleHumen(uid)
 
 class RoleHuman:
-    uid = 0
+    
     live = LUndead
     role = RReserved
     camp = CUndecided
