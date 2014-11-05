@@ -1,55 +1,55 @@
 # -*- coding: utf-8 -*- 
 
-from getinput import *
-from gamerole import *
-from usercontrol import *
-from gameprompt import *
+from role import *
+from check import *
+
+def actfirstnight(roleid):
+    role = Roles.getRole(roleid)
+    if role == 0:
+        return
+
+    role.fnact()
+    role.nact()
+    role.anact()
+
+def actnight(roleid):
+    role = Roles.getRole(roleid)
+    if role == 0:
+        return
+    role.nact()
+    role.anact()
     
 class wolfman:
     def __init__(self):
-        self.gr = gamerole()
-        self.uc = usercontrol()
-        
-        gameinit(aplayernum(checkUserNum))
-
-        self.gr.isneedthief(ahasthief())
-        self.gr.setbydefault()
+        Settings.playerNum = Ask.playerNums(Check.userNum)
 
     def firstnight(self):
-        gallcloseeye()
+        GodSays.closeEyeAll()
 
-        actfirstnight(Thief)
-        actfirstnight(Cupid)
-        actfirstnight(Guard):
-        actfirstnight(Wolves)  
-        actfirstnight(Predict):
-        actfirstnight(Witch):
-        actfirstnight(Hunter):
-
-        self.uc.setremindasnormal()
+        for i in range(len(Rules.Morning)):
+            actfirstnight(Rules.Morning[i])
+#        self.uc.setremindasnormal()
 
     def morning(self):
         deathlist = self.uc.dayoff()
-        gmorning(deathlist)
+#        gmorning(deathlist)
 
-        self.uc.votekill(auservoted(checkAlive))
+#        self.uc.votekill(auservoted(checkAlive))
 
     def night(self):
-        gallcloseeye()
-        
-        actnight(Guard):
-        actnight(Predict):
-        actnight(Witch):
+        GodSays.closeEyeAll()
+        for i in len(Rules.Night):
+            actfirstnight(Rules.Night[i])
 
     def gameprocess(self):
-        pdispatchrole()
+        Prompt.dispatch()
         self.firstnight()
-        aforchief()
+        Ask.forChief()
         while True:
             self.morning()
             self.night()
 
-ff = wolfman()
 
+ff = wolfman()
 while True:
     ff.gameprocess()

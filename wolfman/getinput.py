@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*- 
 
 class Get:
-    def num(prompt, shouldin):
+    def num(prompt):
         s = ""
         while True:
             s = input(prompt + ": ")
             if not type(s) is int and not s.isdigit():
-                continue
-            elif not int(s) in shouldin:
                 continue
             else:
                 return int(s)

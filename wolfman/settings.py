@@ -15,15 +15,19 @@ from rule import Rules
 
 (SetByDefault, SetByUser, SetByPrompt) = range(3)
 
-rolelist = [0 for i in range(Rules.TotalRoles)]
 
 class Settings:
+    rolelist = [0 for i in range(Rules.TotalRoles)]
+    playerNum = 0
+
     def playernumcheck(playernum):
         actual = 0
         for i in range(1, TotalRoles):
-            actual += rolelist[i]
+            actual += Settings.rolelist[i]
 
-        if rolelist[Thief]:
+        Settings.playerNum = playernum
+
+        if Settings.rolelist[Thief]:
             return actual == playernum + 2
         else:
             return actual == playernum
@@ -39,51 +43,51 @@ class Settings:
     def byDefault():
         self.numtotal = gtotaluser
         assert playernum < 19 and playernum > 5
-        rolelist[Witch] = 1
-        rolelist[Wolves] = 2
-        rolelist[Humen] = playernum - 3
+        Settings.rolelist[Witch] = 1
+        Settings.rolelist[Wolves] = 2
+        Settings.rolelist[Humen] = playernum - 3
         if playernum > 7:
-            rolelist[Cupid] = 1
-            rolelist[Humen] = playernum - 4
+            Settings.rolelist[Cupid] = 1
+            Settings.rolelist[Humen] = playernum - 4
         if playernum > 9:
-            rolelist[Thief] = 1
-            rolelist[Wolves] = 3
-            rolelist[Predict] = 1
-            rolelist[Humen] = playernum - 6
+            Settings.rolelist[Thief] = 1
+            Settings.rolelist[Wolves] = 3
+            Settings.rolelist[Predict] = 1
+            Settings.rolelist[Humen] = playernum - 6
         if playernum > 11:
-            rolelist[Guard] = 1
-            rolelist[Hybird] = 1
-            rolelist[Humen] = playernum - 8
+            Settings.rolelist[Guard] = 1
+            Settings.rolelist[Hybird] = 1
+            Settings.rolelist[Humen] = playernum - 8
         if playernum > 13:
-            rolelist[Wolves] = 4
-            rolelist[Hunter] = 1
-            rolelist[Humen] = playernum - 10
+            Settings.rolelist[Wolves] = 4
+            Settings.rolelist[Hunter] = 1
+            Settings.rolelist[Humen] = playernum - 10
         if playernum > 15:
-            rolelist[President] = 1
-            rolelist[Humen] = playernum - 11
+            Settings.rolelist[President] = 1
+            Settings.rolelist[Humen] = playernum - 11
         if playernum > 16:
-            rolelist[Wolves] = 5
-            rolelist[Humen] = playernum - 12
+            Settings.rolelist[Wolves] = 5
+            Settings.rolelist[Humen] = playernum - 12
         if playernum > 17:
-            rolelist[Idiot] = 1
-            rolelist[Humen] = playernum - 13
+            Settings.rolelist[Idiot] = 1
+            Settings.rolelist[Humen] = playernum - 13
 
-        if rolelist[Thief] == 1:
-            rolelist[Humen] += 2
+        if Settings.rolelist[Thief] == 1:
+            Settings.rolelist[Humen] += 2
 
     def byUser():
-        rolelist[Thief] = 0
-        rolelist[Wolves] = 0
-        rolelist[Humen] = 0
-        rolelist[Witch] = 0
-        rolelist[Cupid] = 0
-        rolelist[Predict] = 0
-        rolelist[Hybird] = 0
-        rolelist[Hunter] = 0
-        rolelist[President] = 0
-        rolelist[Idiot] = 0
-        rolelist[Girl] = 0
+        Settings.rolelist[Thief] = 0
+        Settings.rolelist[Wolves] = 0
+        Settings.rolelist[Humen] = 0
+        Settings.rolelist[Witch] = 0
+        Settings.rolelist[Cupid] = 0
+        Settings.rolelist[Predict] = 0
+        Settings.rolelist[Hybird] = 0
+        Settings.rolelist[Hunter] = 0
+        Settings.rolelist[President] = 0
+        Settings.rolelist[Idiot] = 0
+        Settings.rolelist[Girl] = 0
         
     def byPrompt(playerlist):
-        rolelist = playerlist
+        Settings.rolelist = playerlist
 

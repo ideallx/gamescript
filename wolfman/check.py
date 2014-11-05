@@ -2,20 +2,26 @@
 
 from rule import *
 from settings import *
+from usercontrol import *
 
-class check:
+class Check:
     def userNum(i):
-        return i in range(Rules.MinUsers, Rules.MaxUsers + 1)
+        return i in range(Rules.MinUsers - 1, Rules.MaxUsers + 2)
 
     def setRole(i):
-        if not checkUserNum(i):
+        if not Check.userNum(i):
             return False
-        return guserlist[i] == 0
+        return Settings.rolelist[i] == 0
 
-    def alive(i)
-        if not checkUserNum(i):
+    def alive(i):
+        if not Check.userNum(i):
             return False
         if guserlist[i] == 0:
             return False
-        return guserlist[i].live == LUndead
+        return Settings.userlist[i].live == LUndead
+
+    def setCouple(i):
+        if not Check.alive(i):
+            return False
+
                                                                                                                                                                                                                                                                                                                                                                                                           

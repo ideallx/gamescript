@@ -42,6 +42,9 @@ class Prompt:
         Prompt.normal("输入 \"o\" 获取所有角色的角色号")
         Prompt.normal("输入 \"r 3 2\" 设置3号玩家的角色为2")
         
+    def thiefNight():
+        Prompt.normal(l[SThiefRole])
+
     def activeRole(roleid, active):
         if active:
             Prompt.normal(l[SActive] % (rolename[roleid]))
@@ -69,6 +72,7 @@ class Prompt:
 
     def warningHadRole(roleid):
         Prompt.normal(l[SHadRole] % rolename[roleid])
+
         
 
     
