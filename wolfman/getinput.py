@@ -19,3 +19,5 @@ class Get:
                 return False
 
 
+    def raw(prompt):
+        return input(prompt + ": ")

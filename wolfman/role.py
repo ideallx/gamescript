@@ -2,19 +2,10 @@
 from gameprompt import *
 from usercontrol import *
 
-def setuserroleinput(roleid, userseq = 0):
-    return asetuserrole(roleid, Check.setRole, userseq)
-
-
-
 class RoleHuman:
     usersid = []
-    role = 0
-    camp = 0
-    
-    def __init__(self):
-        self.role = Rules.Hume
-        self.camp = Camps.Hume
+    role = Rules.Reserved
+    camp = Camps.Undecided
 
     #first night act
     def fnact(self):
@@ -34,36 +25,40 @@ class RoleHuman:
 
     def addUser(self, userid):
         self.usersid.append(userid)
-        usercontrol.setUserRole(uid, self.role)
-        usercontrol.setUserCamp(uid, self.camp)
+        usercontrol.setUserRole(userid, self.role)
+        usercontrol.setUserCamp(userid, self.camp)
 
     def display(self):
         return
 
+    def isUserAlive(self):
+        if len(self.usersid) == 0:
+            return False
+        return usercontrol.userlist[self.usersid[0]].livestate == LiveStates.Undead
+
     
-class RoleThief:
+class RoleThief(RoleHuman):
     def fnact(self):
         Prompt.thiefNight()
 
 
 class RoleGods(RoleHuman):
-    def __init(self, uid):
-        self.camp = CGods
-        usercontrol.setUserCamp(uid, Camps.Gods)
+    camp = Camps.Gods
 
     def fnact(self):
-        addUser(setuserroleinput(self.role, i))
+        userid = Ask.setUserRole(self.role, Check.setRole)
+        if userid != 0:
+            self.addUser(userid)
 
 
 
 class RoleWolf(RoleHuman):
-    def __init__(self):
-        self.role = Rules.Wolves
-        self.camp = Camps.Wolves
+    role = Rules.Wolves
+    camp = Camps.Wolves
 
     def fnact(self):
-        for i in range(grolelist[self.role]):
-            addUser(setuserroleinput(self.role, i))
+        for i in range(1, Settings.rolelist[Rules.Wolves] + 1):
+            self.addUser(Ask.setUserRole(self.role, Check.setRole, i))
 
     def nact(self):
         usercontrol.killed = Ask.chooseUser(Check.alive)
@@ -72,26 +67,26 @@ class RoleWolf(RoleHuman):
 class RoleWitch(RoleGods):
     drugsave = 1
     drugpoison = 1
-    def __init__(self):
-        self.role = Rules.Witch
+    role = Rules.Witch
 
     def nact(self):
-        if Ask.useSave(usercontrol.killed) and self.drugsave:
+        if Ask.useSave(usercontrol.killed) and self.drugsave and self.isUserAlive():
             usercontrol.saved = usercontrol.killed
             self.drugsave = 0
-        poisoned = Ask.userPoison(Check.alive)
-        if poisoned and self.drugpoison:
+        poisoned = Ask.usePoison(Check.alive)
+        if poisoned and self.drugpoison and self.isUserAlive():
             usercontrol.poisoned = poisoned
             self.drugpoison = 0
 
 class RoleCupid(RoleGods):
-    def __init__(self):
-        self.role = Rules.Cupid
+    role = Rules.Cupid
 
     def fnact(self):
         super(RoleCupid, self).fnact()
+        if not self.isUserAlive():
+            return
         usercontrol.couple1 = Ask.setCouple(1, Check.setCouple)
-        usercontrol.couple1 = Ask.setCouple(2, Check.setCouple)
+        usercontrol.couple2 = Ask.setCouple(2, Check.setCouple)
 
     def anact(self):
         GodSays.openEyeCouple()
@@ -99,50 +94,47 @@ class RoleCupid(RoleGods):
 
 
 class RolePredict(RoleGods):
-    def __init__(self):
-        self.role = Rules.Predict
+    role = Rules.Predict
 
     def nact(self):
         user = Ask.chooseUser(Check.alive)
-        Promopt.isWolf(user, usercontrol.isWolf(user))
+        if not self.isUserAlive():
+            return
+        Prompt.isWolf(user, usercontrol.isWolf(user))
 
 class RoleGuard(RoleGods):
-    def __init__(self):
-        self.role = Rules.Guard
+    role = Rules.Guard
 
     def nact(self):
-        usercontrol.guarded = Ask.chooseUser(Check.alive)
+        guarded = Ask.chooseUser(Check.alive)
+        if not self.isUserAlive():
+            return
+        usercontrol.guarded = guarded
 
 class RoleHybird(RoleGods):
-    def __init__(self):
-        self.role = Rules.Hybird
+    role = Rules.Hybird
 
 class RoleHunter(RoleGods):
-    def __init__(self):
-        self.role = Rules.Hunter
+    role = Rules.Hunter
 
 class RolePresident(RoleGods):
-    def __init__(self):
-        self.role = Rules.President
+    role = Rules.President
 
 class RoleIdiot(RoleGods):
-    def __init__(self):
-        self.role = Rules.Idiot
+    role = Rules.Idiot
 
 class RoleGirl(RoleGods):
-    def __init__(self):
-        self.role = Rules.Girl
+    role = Rules.Girl
 
 class RoleReserved(RoleHuman):
-    def __init(self):
-        self.role = Rules.Reserved
+    role = Rules.Reserved
 
         
 class Roles:
-    rolelist = [RoleReserved, RoleThief, RoleWolf, RoleHuman, \
-                RoleWitch, RoleCupid, RolePredict, RoleGuard, \
-                RoleHybird, RoleHunter, RolePresident, RoleIdiot, \
-                RoleGirl]
+    rolelist = [RoleReserved(), RoleThief(), RoleWolf(), RoleHuman(), \
+                RoleWitch(), RoleCupid(), RolePredict(), RoleGuard(), \
+                RoleHybird(), RoleHunter(), RolePresident(), RoleIdiot(), \
+                RoleGirl()]
 
     def getRole(roleid):
         return Roles.rolelist[roleid]

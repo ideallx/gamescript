@@ -2,6 +2,11 @@
 
 from settings import *
 
+class User:
+    role = Rules.Reserved
+    camp = Camps.Undecided
+    livestate = LiveStates.Undead
+
 class usercontrol:
     killed = 0
     saved = 0
@@ -10,23 +15,25 @@ class usercontrol:
     couple2 = 0
     guarded = 0
     
+    
     userlist = []
 
     def __init__():
-        for i in range(Settings.playerNum):
-            usercontrol.userlist.append([0 for i in range(ArrayUser.TotalArraySize - 1)])
+        for i in range(Settings.playerNum + 1):
+            usercontrol.userlist.append(User())
 
     def setUserRole(userid, roleid):
-        usercontrol.userlist[userid][ArrayUser.Roles] = roleid
+        usercontrol.userlist[userid].role = roleid
 
     def setUserLiveState(userid, ls):
-        usercontrol.userlist[userid][ArrayUser.LiveState] = ls
+        usercontrol.userlist[userid].livestate = ls
         
     def setUserCamp(userid, camp):
-        usercontrol.userlist[userid][ArrayUser.Camp] = camp
+        usercontrol.userlist[userid].camp = camp
 
     def isWolf(userid):
-        return usercontrol.userlist[userid][ArrayUser.Roles] == Rules.Wolves
+        return usercontrol.userlist[userid].role == Rules.Wolves
+    
 
     def morningCheck():
         return

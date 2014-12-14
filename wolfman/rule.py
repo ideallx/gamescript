@@ -16,9 +16,5 @@ class Camps:
     (Undecided, Wolves, Gods, Humen, Wolfman) = range(TotalCamps)
 
 class LiveStates:
-    TotalLiveStates = 5
-    (Undead, Voted, Killed, Poisoned, Couple) = range(TotalLiveStates)
-
-class ArrayUser:
-    TotalArraySize = 3
-    (Roles, LiveState, Camp) = range(TotalArraySize)
+    TotalLiveStates = 6
+    (Undead, Voted, Killed, Poisoned, Couple, Huntered) = range(TotalLiveStates)

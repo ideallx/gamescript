@@ -11,7 +11,7 @@
 10人以上给盗贼
 '''
 
-from rule import Rules
+from rule import *
 
 (SetByDefault, SetByUser, SetByPrompt) = range(3)
 
@@ -41,52 +41,50 @@ class Settings:
             byPrompt(playerlist)
 
     def byDefault():
-        self.numtotal = gtotaluser
-        assert playernum < 19 and playernum > 5
-        Settings.rolelist[Witch] = 1
-        Settings.rolelist[Wolves] = 2
-        Settings.rolelist[Humen] = playernum - 3
-        if playernum > 7:
-            Settings.rolelist[Cupid] = 1
-            Settings.rolelist[Humen] = playernum - 4
-        if playernum > 9:
-            Settings.rolelist[Thief] = 1
-            Settings.rolelist[Wolves] = 3
-            Settings.rolelist[Predict] = 1
-            Settings.rolelist[Humen] = playernum - 6
-        if playernum > 11:
-            Settings.rolelist[Guard] = 1
-            Settings.rolelist[Hybird] = 1
-            Settings.rolelist[Humen] = playernum - 8
-        if playernum > 13:
-            Settings.rolelist[Wolves] = 4
-            Settings.rolelist[Hunter] = 1
-            Settings.rolelist[Humen] = playernum - 10
-        if playernum > 15:
-            Settings.rolelist[President] = 1
-            Settings.rolelist[Humen] = playernum - 11
-        if playernum > 16:
-            Settings.rolelist[Wolves] = 5
-            Settings.rolelist[Humen] = playernum - 12
-        if playernum > 17:
-            Settings.rolelist[Idiot] = 1
-            Settings.rolelist[Humen] = playernum - 13
+        Settings.rolelist[Rules.Witch] = 1
+        Settings.rolelist[Rules.Wolves] = 2
+        Settings.rolelist[Rules.Humen] = Settings.playerNum - 3
+        if Settings.playerNum > 7:
+            Settings.rolelist[Rules.Cupid] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 4
+        if Settings.playerNum > 9:
+            Settings.rolelist[Rules.Thief] = 1
+            Settings.rolelist[Rules.Wolves] = 3
+            Settings.rolelist[Rules.Predict] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 6
+        if Settings.playerNum > 11:
+            Settings.rolelist[Rules.Guard] = 1
+            Settings.rolelist[Rules.Hybird] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 8
+        if Settings.playerNum > 13:
+            Settings.rolelist[Rules.Wolves] = 4
+            Settings.rolelist[Rules.Hunter] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 10
+        if Settings.playerNum > 15:
+            Settings.rolelist[Rules.President] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 11
+        if Settings.playerNum > 16:
+            Settings.rolelist[Rules.Wolves] = 5
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 12
+        if Settings.playerNum > 17:
+            Settings.rolelist[Rules.Idiot] = 1
+            Settings.rolelist[Rules.Humen] = Settings.playerNum - 13
 
-        if Settings.rolelist[Thief] == 1:
-            Settings.rolelist[Humen] += 2
+        if Settings.rolelist[Rules.Thief] == 1:
+            Settings.rolelist[Rules.Humen] += 2
 
     def byUser():
-        Settings.rolelist[Thief] = 0
-        Settings.rolelist[Wolves] = 0
-        Settings.rolelist[Humen] = 0
-        Settings.rolelist[Witch] = 0
-        Settings.rolelist[Cupid] = 0
-        Settings.rolelist[Predict] = 0
-        Settings.rolelist[Hybird] = 0
-        Settings.rolelist[Hunter] = 0
-        Settings.rolelist[President] = 0
-        Settings.rolelist[Idiot] = 0
-        Settings.rolelist[Girl] = 0
+        Settings.rolelist[Rules.Thief] = 0
+        Settings.rolelist[Rules.Wolves] = 0
+        Settings.rolelist[Rules.Humen] = 0
+        Settings.rolelist[Rules.Witch] = 0
+        Settings.rolelist[Rules.Cupid] = 0
+        Settings.rolelist[Rules.Predict] = 0
+        Settings.rolelist[Rules.Hybird] = 0
+        Settings.rolelist[Rules.Hunter] = 0
+        Settings.rolelist[Rules.President] = 0
+        Settings.rolelist[Rules.Idiot] = 0
+        Settings.rolelist[Rules.Girl] = 0
         
     def byPrompt(playerlist):
         Settings.rolelist = playerlist

@@ -8,20 +8,27 @@ def actfirstnight(roleid):
     if role == 0:
         return
 
+    GodSays.openEye(roleid)
     role.fnact()
     role.nact()
+    GodSays.closeEye(roleid)
+
     role.anact()
 
 def actnight(roleid):
     role = Roles.getRole(roleid)
-    if role == 0:
-        return
+
+    GodSays.openEye(roleid)
     role.nact()
+    GodSays.closeEye(roleid)
+
     role.anact()
     
 class wolfman:
     def __init__(self):
         Settings.playerNum = Ask.playerNums(Check.userNum)
+        Settings.byDefault()
+        usercontrol.__init__()
 
     def firstnight(self):
         GodSays.closeEyeAll()
@@ -44,7 +51,7 @@ class wolfman:
     def gameprocess(self):
         Prompt.dispatch()
         self.firstnight()
-        Ask.forChief()
+        GodSays.forChief()
         while True:
             self.morning()
             self.night()
