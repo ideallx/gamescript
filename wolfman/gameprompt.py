@@ -6,7 +6,7 @@ from usercontrol import *
 
 rolename = ["未定", "盗贼", "狼人", "普通村名", "女巫", "丘比特", "预言家", \
             "守卫", "混血儿", "猎人", "村长", "白痴", "小女孩"]
-livename = ["生存", "票死", "狼人咬死", "女巫毒死", "情侣带死", "猎人带走"]
+livename = ["生存", "票死", "狼人咬死", "女巫毒死", "情侣带死", "猎人带走", "上帝秒杀"]
 
 campname = ["未定", "狼人", "神", "普通村民", "人狼"]
 
@@ -15,9 +15,10 @@ ChineseLanguage = ["启用%s", "分发身份卡", "玩家人数建议 %d-%d 人"
         "天亮了", "设置玩家人数", "请输入%s号码, 输入 0 表示没有该角色", "请输入情侣%d号码", \
         "该用户已有角色", "记住盗贼身份，请在之后输入", "%d 号和 %d 号是情侣", "本局没有情侣", \
         "请选择一名玩家, 输入 0 表示放弃", "%d 号玩家%s是狼人", "不", "今天晚上 %d 号玩家死了，你是否要使用解药", \
-        "你是否要使用毒药， 输入 0 表示放弃使用", "%s 号死亡，死左发言", "竞选警长", "今晚被票死的是",
+        "你是否要使用毒药， 输入 0 表示放弃使用", "今天晚上 %s 号死亡，死左发言", "竞选警长", "今天早上被票死的是",
         "情侣请睁眼，互相认识一下", "丘比特请指定情侣", "角色是：%s", "阵营是：%s", \
-        "存活状态：%s", "竞选成功的是", "玩家%d: 角色:%s, 生存:%s, 阵营:%s"]
+        "存活状态：%s", "竞选成功的是", "玩家%d: 角色:%s, 生存:%s, 阵营:%s", "今晚平安夜", \
+        "%d 号玩家死于: %s", "游戏结束，%s 胜利"]
 
 
 (SActive, SDispatch, SNumError, SCouple, \
@@ -27,7 +28,8 @@ ChineseLanguage = ["启用%s", "分发身份卡", "玩家人数建议 %d-%d 人"
         SChooseOneUser, SIsWolf, SNo, SWitchSave, \
         SWitchPoison, SDeathNight, SForChief, SVoteDeath, \
         SCoupleOpenEye, SCoupleSetting, SRole, SCamp, \
-        SLiveState, SWinChief, SUserInfo) = range(31)
+        SLiveState, SWinChief, SUserInfo, SSafeNight, \
+        SKilledBy, SWonBy) = range(34)
 
 
 l = ChineseLanguage
@@ -64,6 +66,17 @@ class Prompt:
             Prompt.normal(s)
             i += 1
         Prompt.consoleLine()
+
+    def allAliveUserInfo():
+        i = 1
+        Prompt.consoleLine()
+        for user in usercontrol.userlist[1:]:
+            if user.livestate == LiveStates.Undead:
+                s = l[SUserInfo] % (i, rolename[user.role], livename[user.livestate], campname[user.camp])
+                Prompt.normal(s)
+            i += 1
+        Prompt.consoleLine()
+
         
     def thiefNight():
         Prompt.normal(l[SThiefRole])
@@ -96,6 +109,8 @@ class Prompt:
     def warningHadRole(roleid):
         Prompt.normal(l[SHadRole] % rolename[roleid])
 
+    def deathReason(userid, reason):
+        Prompt.normal(l[SKilledBy] % (userid, reason))
         
 
     
@@ -123,15 +138,21 @@ class GodSays:
     
     def openEyeAll():
         GodSays.normal(l[SAllOpenEye])
+
+    def safeNight():
+        GodSays.normal(l[SSafenight])
         
-    def morning(deathlist):
+    def dawn(deathlist):
         if len(deathlist) == 0:
-            printGodSay(l[SSafenight])
+            GodSays.normal(l[SSafeNight])
         else:
-            printGodSay(str(deathlist) + l[SDeathNight])
+            GodSays.normal(l[SDeathNight] % str(deathlist))
             
     def forChief():
         return GodSays.normal(l[SForChief])
+
+    def gameOver(camp):
+        GodSays.normal(l[SWonBy] % campname[camp])
 
 def notcheck(n):
     return True
@@ -151,6 +172,8 @@ class Ask:
                 Prompt.help()
             elif i == "i":
                 Prompt.allUserInfo()
+            elif i == "l":
+                Prompt.allAliveUserInfo()
 
             elif not type(i) is int and not i.isdigit():
                 continue

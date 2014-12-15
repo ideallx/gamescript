@@ -33,20 +33,23 @@ class wolfman:
     def firstnight(self):
         GodSays.closeEyeAll()
 
-        for i in range(len(Rules.Morning)):
-            actfirstnight(Rules.Morning[i])
-#        self.uc.setremindasnormal()
+        for i in Rules.FirstNight:
+            if Settings.rolelist[i] != 0:
+                actfirstnight(i)
+        usercontrol.firstNightEnd()
 
     def morning(self):
-        deathlist = self.uc.dayoff()
+        deathlist = usercontrol.morningCheck()
+        GodSays.dawn(deathlist)
 #        gmorning(deathlist)
 
-#        self.uc.votekill(auservoted(checkAlive))
+        usercontrol.votekill(Ask.userVoted(Check.alive))
 
     def night(self):
         GodSays.closeEyeAll()
-        for i in len(Rules.Night):
-            actfirstnight(Rules.Night[i])
+        for i in Rules.Night:
+            if Settings.rolelist[i] != 0:
+             actnight(i)
 
     def gameprocess(self):
         Prompt.dispatch()
